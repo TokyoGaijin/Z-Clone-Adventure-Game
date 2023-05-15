@@ -29,9 +29,11 @@ class Player(object):
         self.sword = self.swordRect
         self.rectColor = cs.green["pygame"]
         self.swordColor = cs.gray["pygame"]
-        self.speed = 2
+        self.speed = 8
         self.attack_timer = 0
         self.isAttacking = False
+        self.current_frame = 0
+        self.current_timer = 0
         self.sword_strength = 1
         self.health = 3
 
@@ -73,10 +75,11 @@ class Player(object):
         pygame.draw.rect(self.surface, self.swordColor, self.sword)
 
     def animate_walk(self, direction):
-        current_frame = 0
-        current_timer = 0
-        factor = 50
-        print(current_frame)
+        if self.current_frame >= 3:
+            self.current_frame = 0
+        factor = 5
+        self.current_timer += 1
+
         if direction == "right":
             self.current_anim = self.walk_right_anim
         if direction == "left":
@@ -86,14 +89,11 @@ class Player(object):
         if direction == "down":
             self.current_anim = self.walk_front_anim
 
-        if self.isWalking:
-            current_timer += 1
-            if current_timer % factor == 0:
-                current_frame += 1
-            if current_frame > 2:
-                current_frame = 0
+        self.surface.blit(self.current_anim[self.current_frame], (self.posX, self.posY))
 
-        self.surface.blit(self.current_anim[current_frame], (self.posX, self.posY))
+        if self.current_timer % factor == 0:
+            self.current_frame += 1
+
 
 
     def controls(self):
@@ -116,15 +116,17 @@ class Player(object):
 
 
 
+
     def update(self):
         self.speed = 2
         keys = pygame.key.get_pressed()
+
         if keys[pygame.K_SPACE]:
             self.attack_timer += 1
         else:
             self.attack_timer = 0
 
-        if self.attack_timer > 0 and self.attack_timer <= 10:
+        if 0 < self.attack_timer <= 10:
             self.isAttacking = True
         else:
             self.isAttacking = False
