@@ -115,8 +115,6 @@ class Player(object):
 
 
 
-
-
     def update(self):
         self.speed = 2
         keys = pygame.key.get_pressed()
