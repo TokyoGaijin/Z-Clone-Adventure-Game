@@ -55,6 +55,7 @@ golden_shower = {"pygame": (204,204,0), "tk": "#CCCC00"}
 mustard = {"pygame": (255,255,77), "tk": "#FFE14D"}
 gold = {"pygame": (204,170,0), "tk": "#CCAA00"}
 yellow = {"pygame": (255,255,0), "tk": "#FFFF00"}
+z_ground = {"pygame": (244, 225, 31), "tk": "#F4E11F"}
 
 # Greens
 green ={"pygame": (0,255,0), "tk": "#00FF00"}

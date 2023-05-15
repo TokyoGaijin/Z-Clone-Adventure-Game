@@ -1,5 +1,6 @@
 import pygame
 import colorswatch as cs
+import os
 
 class Player(object):
     def __init__(self, surface, startX, startY):
@@ -13,6 +14,18 @@ class Player(object):
         self.playerRect = pygame.Rect(self.posX, self.posY, self.size, self.size)
         self.swordRect = pygame.Rect(self.swordX, self.swordY, self.sword_width, self.size)
         self.swordSideRect = pygame.Rect(self.swordX, self.swordY, self.size, self.sword_width)
+
+        self.stand_sprite = [pygame.image.load(os.path.join("hero", "hero_stand_front.png")), pygame.image.load(os.path.join("hero", "hero_stand_left.png")), pygame.image.load(os.path.join("hero", "back_hero_walk_1.png")),
+                             pygame.transform.flip(pygame.image.load(os.path.join("hero", "hero_stand_left.png")), True, False)]
+        self.stand_dir = {"up": self.stand_sprite[2], "down": self.stand_sprite[0], "left": self.stand_sprite[1], "right": self.stand_sprite[3]}
+
+        self.walk_front_anim = [pygame.image.load(os.path.join("hero", f"front_hero_walk_{i}.png")) for i in range(3)]
+        self.walk_back_anim = [pygame.image.load(os.path.join("hero", f"back_hero_walk_{i}.png")) for i in range(3)]
+        self.walk_left_anim = [pygame.image.load(os.path.join("hero", f"left_hero_walk_{i}.png")) for i in range(3)]
+        self.walk_right_anim = [pygame.transform.flip(pygame.image.load(os.path.join("hero", f"left_hero_walk_{i}.png")), True, False) for i in range(3)]
+        self.current_anim = []
+        self.isWalking = False
+        self.direction = "down"
         self.sword = self.swordRect
         self.rectColor = cs.green["pygame"]
         self.swordColor = cs.gray["pygame"]
@@ -52,25 +65,56 @@ class Player(object):
             self.playerRect.y += self.speed
 
         self.posX, self.posY = self.playerRect.x, self.playerRect.y
+        self.direction = direction
         self.update_sword(direction)
 
 
     def attack(self):
         pygame.draw.rect(self.surface, self.swordColor, self.sword)
 
+    def animate_walk(self, direction):
+        current_frame = 0
+        current_timer = 0
+        factor = 50
+        print(current_frame)
+        if direction == "right":
+            self.current_anim = self.walk_right_anim
+        if direction == "left":
+            self.current_anim = self.walk_left_anim
+        if direction == "up":
+            self.current_anim = self.walk_back_anim
+        if direction == "down":
+            self.current_anim = self.walk_front_anim
 
+        if self.isWalking:
+            current_timer += 1
+            if current_timer % factor == 0:
+                current_frame += 1
+            if current_frame > 2:
+                current_frame = 0
+
+        self.surface.blit(self.current_anim[current_frame], (self.posX, self.posY))
 
 
     def controls(self):
+        self.isWalking = False
         keys = pygame.key.get_pressed()
+
         if keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.move("left")
+            self.isWalking = True
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self.move("right")
+            self.isWalking = True
         if keys[pygame.K_UP] or keys[pygame.K_w]:
             self.move("up")
+            self.isWalking = True
         if keys[pygame.K_DOWN] or keys[pygame.K_s]:
             self.move("down")
+            self.isWalking = True
+
+
+
 
     def update(self):
         self.speed = 2
@@ -85,10 +129,14 @@ class Player(object):
         else:
             self.isAttacking = False
 
+        if self.isWalking:
+            self.animate_walk(self.direction)
+
         self.controls()
 
 
     def draw(self):
-        pygame.draw.rect(self.surface, self.rectColor, self.playerRect)
+        if not self.isWalking:
+            self.surface.blit(self.stand_dir[self.direction], (self.posX, self.posY))
         if self.isAttacking:
             self.attack()

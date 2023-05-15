@@ -10,7 +10,7 @@ class Surface():
         self.CLOCK = pygame.time.Clock()
         self.screenSize = (sizeX, sizeY)
         self.SURFACE = pygame.display.set_mode(self.screenSize)
-        self.BG = cs.black["pygame"]
+        self.BG = cs.z_ground["pygame"]
         self.inPlay = True
         self.fullscreen = False
         pygame.display.set_caption(self.winName)
