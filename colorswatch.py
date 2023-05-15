@@ -60,12 +60,14 @@ yellow = {"pygame": (255,255,0), "tk": "#FFFF00"}
 green ={"pygame": (0,255,0), "tk": "#00FF00"}
 bile = {"pygame": (0,102,17), "tk": "#006611"}
 puke = {"pygame": (68,102,0), "tk": "#446600"}
+jungle = {"pygame": (45, 214, 75), "tk": "#2DD64B"}
 
 # Reds
 tangelo = {"pygame": (249,77,0), "tk": "#F94D00"}
 red ={"pygame": (255,0,0), "tk": "#FF0000"}
 purple_rain = {"pygame": (106,77,255), "tk": "#6A4DFF"}
 fuchsia = {"pygame": (255,25,255), "tk": "#FF19FF"}
+sakura = {"pygame": (251, 208, 250), "tk": "FBD0FA"}
 
 # Browns
 brown = {"pygame": (165, 139, 86), "tk": "#A48B56"}
