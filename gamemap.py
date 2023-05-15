@@ -21,6 +21,7 @@ class Screen(object):
                           "----------------",
                           "----------------",
                           "----------------"]
+
         self.test_region = [["dddd-----sssss--",
                              "dddd-------sssss",
                              "dddd------------",

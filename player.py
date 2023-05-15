@@ -54,8 +54,10 @@ class Player(object):
         self.posX, self.posY = self.playerRect.x, self.playerRect.y
         self.update_sword(direction)
 
+
     def attack(self):
         pygame.draw.rect(self.surface, self.swordColor, self.sword)
+
 
 
 
@@ -71,6 +73,7 @@ class Player(object):
             self.move("down")
 
     def update(self):
+        self.speed = 2
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE]:
             self.attack_timer += 1
