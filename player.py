@@ -103,13 +103,13 @@ class Player(object):
         if keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.move("left")
             self.isWalking = True
-        if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+        elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self.move("right")
             self.isWalking = True
-        if keys[pygame.K_UP] or keys[pygame.K_w]:
+        elif keys[pygame.K_UP] or keys[pygame.K_w]:
             self.move("up")
             self.isWalking = True
-        if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+        elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
             self.move("down")
             self.isWalking = True
 
